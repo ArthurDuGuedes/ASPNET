@@ -1,58 +1,58 @@
-# # Compilação
-# bin/
-# obj/
+# Compilação
+bin/
+obj/
 
-# # Dados gerados pela publicação
-# publish/
-# out/
+# Dados gerados pela publicação
+publish/
+out/
 
-# # Usuário e IDE
-# .vscode/
-# .idea/
-# *.user
-# *.suo
-# *.userosscache
-# *.sln.docstates
+# Usuário e IDE
+.vscode/
+.idea/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
 
-# # Logs e banco local
-# *.log
-# *.sqlite
-# *.db
-# *.db-shm
-# *.db-wal
+# Logs e banco local
+*.log
+*.sqlite
+*.db
+*.db-shm
+*.db-wal
 
-# # Diretórios de pacotes
-# packages/
-# *.nupkg
-# project.lock.json
-# project.fragment.lock.json
+# Diretórios de pacotes
+packages/
+*.nupkg
+project.lock.json
+project.fragment.lock.json
 
-# # Configurações de dependência
-# project.json
-# global.json
-# *.deps.json
+# Configurações de dependência
+project.json
+global.json
+*.deps.json
 
-# # Diretórios temporários do Visual Studio
-# _TestResults/
-# TestResults/
-# .vs/
-# # Arquivo de cache de dependências do VS
-# .vscode/
+# Diretórios temporários do Visual Studio
+_TestResults/
+TestResults/
+.vs/
+# Arquivo de cache de dependências do VS
+.vscode/
 
-# # Arquivos de publicação locais
-# Properties/launchSettings.json
+# Arquivos de publicação locais
+Properties/launchSettings.json
 
-# # Arquivos de segurança locais
-# secrets.json
-# appsettings.Development.json
-# appsettings.Local.json
-# appsettings.*.local.json
+# Arquivos de segurança locais
+secrets.json
+appsettings.Development.json
+appsettings.Local.json
+appsettings.*.local.json
 
-# # Configurações temporárias
-# node_modules/
-# bower_components/
+# Configurações temporárias
+node_modules/
+bower_components/
 
-# # Arquivos de backup temporários
-# *.bak
-# *.tmp
-# *.temp
+# Arquivos de backup temporários
+*.bak
+*.tmp
+*.temp

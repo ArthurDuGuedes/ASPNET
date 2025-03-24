@@ -55,4 +55,6 @@ bower_components/
 # Arquivos de backup temporários
 *.bak
 *.tmp
+
 *.temp
+

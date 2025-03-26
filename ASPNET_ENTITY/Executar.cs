@@ -12,7 +12,10 @@ using Microsoft.Extensions.DependencyInjection;
 
 // Chamar as bibliotecas do Entity Framework
 using Microsoft.EntityFrameworkCore;
+//comando dotnet add package Npgsql.EntityFrameworkCore.PostgreSQL
 using Microsoft.Extensions.Configuration;
+
+
 
 using ASPNET_ENTITY.database;
 

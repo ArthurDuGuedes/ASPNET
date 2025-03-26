@@ -3,37 +3,33 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-
-
 using Microsoft.AspNetCore.Mvc;
-//comando dotnet add package System.ComponentModel
-using ASPNET_ENTITY.Models;
-using ASPNET_ENTITY.database;
-
+using AtividadeAspNet1.Models;
+using AtividadeAspNet1.db;
 using Microsoft.EntityFrameworkCore;
-//comando dotnet add package Microsoft.EntityFrameworkCore
 
-namespace ASPNET_ENTITY.Controllers // Note o plural "Controllers"
+
+namespace AtividadeAspNet1.Controllers
 {
     [ApiController]
     [Route("[controller]")]
     public class UsuariosController : ControllerBase // Classe única, sem aninhamento
     {
-        private readonly AppDbContext _context;
+        private readonly Conexao _context;
 
-        public UsuariosController(AppDbContext context)
+        public UsuariosController(Conexao context)
         {
             _context = context;
         }
 
         [HttpGet]
-        public async Task<IEnumerable<Usuario>> Get()
+        public async Task<IEnumerable<Usuarios>> Get()
         {
             return await _context.Usuarios.ToListAsync();
         }
 
         [HttpPost]
-        public async Task<ActionResult<Usuario>> Post([FromBody] Usuario usuario)
+        public async Task<ActionResult<Usuarios>> Post([FromBody] Usuarios usuario)
         {
             _context.Usuarios.Add(usuario);
             await _context.SaveChangesAsync();
@@ -41,13 +37,16 @@ namespace ASPNET_ENTITY.Controllers // Note o plural "Controllers"
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult<Usuario>> Put(int id, [FromBody] Usuario usuario)
+        public async Task<ActionResult<Usuarios>> Put(int id, [FromBody] Usuarios usuario)
         {
             var existente = await _context.Usuarios.FindAsync(id);
             if (existente == null) return NotFound();
 
-            existente.Nome = usuario.Nome;
-            existente.Email = usuario.Email;
+            existente.password = usuario.password;
+            existente.nome = usuario.nome;
+            existente.ramal = usuario.ramal;
+            existente.especialidade = usuario.especialidade;
+
             await _context.SaveChangesAsync();
             return existente;
         }
@@ -56,11 +55,10 @@ namespace ASPNET_ENTITY.Controllers // Note o plural "Controllers"
         public async Task<ActionResult> Delete(int id)
         {
             var existente = await _context.Usuarios.FindAsync(id);
-            if(existente == null) return NotFound();
+            if (existente == null) return NotFound();
             _context.Usuarios.Remove(existente);
             await _context.SaveChangesAsync();
             return NoContent();
         }
     }
 }
-

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerenciamento de Usuários</title>
+    <script src="script.js" defer></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 20px;
+        }
+        table {
+            width: 80%;
+            margin: 20px auto;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+        button {
+            cursor: pointer;
+            background-color: red;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+        }
+        button:hover {
+            background-color: darkred;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Cadastrar Usuário</h1>
+
+    <form id="userForm" onsubmit="POST(event)">
+        <input type="text" id="nome" placeholder="Nome" required>
+        <input type="password" id="password" placeholder="Senha" required>
+        <input type="number" id="ramal" placeholder="Ramal" required>
+        <input type="text" id="especialidade" placeholder="Especialidade" required>
+        <button type="submit">Cadastrar</button>
+    </form>
+
+    <h2>Lista de Usuários</h2>
+    
+    <table>
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Senha</th>
+                <th>Ramal</th>
+                <th>Especialidade</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            
+        </tbody>
+    </table>
+
+</body>
+</html>

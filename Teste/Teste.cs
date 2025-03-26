@@ -4,9 +4,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder; //dotnet add package Microsoft.AspNetCore.Hosting
 using Microsoft.Extensions.Hosting; //dotnet add package Microsoft.Extensions.Hosting
-using Microsoft.AspNetCore.Hosting; 
-using System.Security.Cryptography;
-using System.Net;
+
+
+
+
 
 
 namespace Teste

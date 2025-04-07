@@ -10,6 +10,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ASPNET_ENTITY", "ASPNET_ENT
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AtividadeAspNet1", "AtividadeAspNet1\AtividadeAspNet1.csproj", "{5704BA1D-899A-491F-B065-00BA4D47D93D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ASPNET_CORE_EXEMPLO", "ASPNET_CORE_EXEMPLO\ASPNET_CORE_EXEMPLO.csproj", "{B26BEB6E-6818-4907-8348-B4DE02799481}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -32,6 +34,10 @@ Global
 		{5704BA1D-899A-491F-B065-00BA4D47D93D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5704BA1D-899A-491F-B065-00BA4D47D93D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5704BA1D-899A-491F-B065-00BA4D47D93D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B26BEB6E-6818-4907-8348-B4DE02799481}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B26BEB6E-6818-4907-8348-B4DE02799481}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B26BEB6E-6818-4907-8348-B4DE02799481}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B26BEB6E-6818-4907-8348-B4DE02799481}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

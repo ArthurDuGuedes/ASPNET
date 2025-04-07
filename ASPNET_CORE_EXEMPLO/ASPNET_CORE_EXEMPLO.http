@@ -1,0 +1,20 @@
+@ASPNET_CORE_EXEMPLO_HostAddress = http://localhost:5093
+
+
+
+GET http://localhost:5093/Usuarios
+Accept: application/json
+###
+
+POST http://localhost:5093/Usuarios
+Content-Type: application/json
+
+{
+    "password": "123",
+    "nome": "João",
+    "ramal": 10,
+    "especialidade": "TI"
+}
+
+
+###

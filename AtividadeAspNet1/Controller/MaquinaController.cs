@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore;
 namespace AtividadeAspNet1.Controller
 {
     [ApiController]
-    [Route("arthur/[controller]")]
+    [Route("[controller]")]
     public class MaquinasController : ControllerBase // Classe única, sem aninhamento
     {
         private readonly Conexao _context;

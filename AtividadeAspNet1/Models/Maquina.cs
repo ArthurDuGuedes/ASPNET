@@ -13,21 +13,26 @@ namespace AtividadeAspNet1.Models
     {
         [Key]
         [Column("id_maquina")]
-        public int Id {get; set;}
+        public int Id { get; set; }
         [Column("tipo")]
-        public string tipo {get; set;}
+        public string tipo { get; set; }
         [Column("velocidade")]
-        public int velocidade {get; set;}
+        public int velocidade { get; set; }
         [Column("harddisk")]
-        public int HardDisk {get; set;}
+        public int HardDisk { get; set; }
         [Column("placa_rede")]
-        public int PlacaRede {get; set;}
+        public int PlacaRede { get; set; }
         [Column("memoria_ram")]
-        public int MemoriaRam {get; set;}   
-        [ForeignKey("usuario")]
-        public int fk_usuario {get; set;}
-        public Usuarios Usuarios {get; set;}
+        public int MemoriaRam { get; set; }
+    
+        [ForeignKey("Usuarios")]
+        [Column("fk_usuario")] 
+        public int FkUsuario { get; set; }
+
+        public virtual Usuarios Usuarios { get; set; } 
+
 
 
     }
 }
+

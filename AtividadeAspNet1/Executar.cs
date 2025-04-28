@@ -20,7 +20,6 @@ namespace AtividadeAspNet1
         static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-
             var conncetionString = builder.Configuration.GetConnectionString("PostgresConnection"); 
 
             builder.Services.AddDbContext<Conexao>(options => options.UseNpgsql(conncetionString));

@@ -2,9 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-
-
 using Microsoft.AspNetCore.Mvc;
+
 using ASPNET_CORE_EXEMPLO.Models;
 using ASPNET_CORE_EXEMPLO.db;
 using Microsoft.EntityFrameworkCore;

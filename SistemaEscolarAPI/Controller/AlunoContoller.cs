@@ -26,24 +26,39 @@ namespace SistemaEscolarAPI.Controller
             var alunos = await _context.Alunos
                 .Include(a => a.Curso)
                 .Select(alunos => new AlunoDTO{
-                    Nome = alunos.Nome, Curso = alunos.Curso.Descricao
+                    Id = alunos.Id,
+                    Nome = alunos.Nome, 
+                    Curso = alunos.Curso.Descricao
                 }).ToListAsync();
             return Ok(alunos);
         }
 
+        [HttpGet("{id}")]
+        public async Task<ActionResult<AlunoDTO>> GetId(int id ){
+            var aluno = await _context.Alunos
+                .Include(a => a.Curso)
+                .FirstOrDefaultAsync(a => a.Id == id);
+
+            if (aluno == null) return NotFound();
+            return Ok (new AlunoDTO{
+                Id = aluno.Id,
+                Nome = aluno.Nome,
+                Curso = aluno.Curso.Descricao
+            });
+        }
+
         [HttpPost]
         public async Task<ActionResult> Post([FromBody] AlunoDTO alunoDto ){
-            var Curso = await _context.Cursos.FirstOrDefaultAsync(c => c.Descricao == alunoDto.Curso);
-            if (Curso == null) return BadRequest("Curso não escontrado");
+           
 
             var aluno = new Aluno {
                 Nome = alunoDto.Nome,
-                CursoId = Curso.Id
+                Curso = alunoDto.Curso == null ? null : await _context.Cursos.FirstOrDefaultAsync(c => c.Descricao == alunoDto.Curso)
             };
             _context.Alunos.Add(aluno);
             await _context.SaveChangesAsync();
 
-            return Ok(aluno);
+            return Ok(new {mensagem = "Aluno cadastrado com sucesso"});
         }
 
         [HttpPut("{id}")]
@@ -57,7 +72,7 @@ namespace SistemaEscolarAPI.Controller
 
             _context.Alunos.Update(alunoExistente);
             await _context.SaveChangesAsync();
-            return Ok();
+            return Ok(new{mensagem = "Aluno atualizado com sucesso"}); 
 
         }
 
@@ -71,5 +86,6 @@ namespace SistemaEscolarAPI.Controller
             await _context.SaveChangesAsync();
             return Ok();
         }
+
     }
 }

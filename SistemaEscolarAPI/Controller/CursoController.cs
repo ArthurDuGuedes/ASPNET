@@ -24,19 +24,28 @@ namespace SistemaEscolarAPI.Controller
         [HttpGet]
         public async Task<ActionResult<IEnumerable<CursoDTO>>> Get()
         {
-            var cursos = await _context.Cursos.Select(c => new CursoDTO { Descricao = c.Descricao }).ToListAsync();
+            var cursos = await _context.Cursos.Select(c => new CursoDTO { Id = c.Id ,Descricao = c.Descricao }).ToListAsync();
             return Ok(cursos);
+        }
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<CursoDTO>> GetId(int id)
+        {
+            var curso = await _context.Cursos.FirstOrDefaultAsync(c => c.Id == id);
+
+            if(curso == null)return NotFound();
+
+            return Ok(new CursoDTO {Id = curso.Id, Descricao = curso.Descricao});
         }
 
         [HttpPost]
         public async Task<ActionResult> Post ([FromBody] CursoDTO cursoDto)
         {
-            var curso = await _context.Cursos.FirstOrDefaultAsync(c => c.Descricao == cursoDto.Descricao);
-
-            if (curso == null) return BadRequest("Curso nao encontrado");
+            var curso = new Curso {Descricao = cursoDto.Descricao};
             _context.Cursos.Add(curso);
             await _context.SaveChangesAsync();
-            return Ok(curso);
+            return Ok(); 
+            
         }
 
         [HttpPut("{id}")] 

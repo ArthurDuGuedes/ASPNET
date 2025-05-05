@@ -5,10 +5,12 @@ using System.Threading.Tasks;
 
 namespace SistemaEscolarAPI.DTO
 {
-    public class CursoDTO
+    public class LoginDTO
     {
-        public int Id {get; set;}
-        public string Descricao {get; set;}
+        public string Username{get; set;}
+        public  string Password {get; set;}
         
+
+
     }
 }

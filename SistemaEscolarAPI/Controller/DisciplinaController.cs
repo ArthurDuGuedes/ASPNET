@@ -35,6 +35,17 @@ namespace SistemaEscolarAPI.Controller
             return Ok(disciplinas);
         }
 
+        [HttpGet("{id}")]
+        public async Task<ActionResult<DisciplinaDTO>> GetId(int id)
+        {
+            var disciplina = await _context.Disciplinas.Include(d => d.Curso).FirstOrDefaultAsync(d => d.Id == id);
+
+            if (disciplina == null) return NotFound();
+            
+            return Ok(new DisciplinaDTO { Id = disciplina.Id, Descricao = disciplina.Descricao, Curso = disciplina.Curso.Descricao });
+
+        }
+
         [HttpPost]
         public async Task<ActionResult> Post([FromBody] DisciplinaDTO dto)
         {
@@ -49,7 +60,7 @@ namespace SistemaEscolarAPI.Controller
 
             _context.Disciplinas.Add(disciplina);
             await _context.SaveChangesAsync();
-            return Ok(disciplina);
+            return Ok(new { mensagem = "Disciplina cadastrada com sucesso" });
         }
 
         [HttpPut("{id}")]
@@ -67,7 +78,7 @@ namespace SistemaEscolarAPI.Controller
             _context.Disciplinas.Update(disciplinaExistente);
             await _context.SaveChangesAsync();
 
-            return Ok();
+            return Ok(new { mensagem = "Disciplina atualizada com sucesso" });
         }
 
         [HttpDelete("{id}")]
@@ -79,7 +90,7 @@ namespace SistemaEscolarAPI.Controller
             _context.Disciplinas.Remove(disciplina);
             await _context.SaveChangesAsync();
 
-            return Ok();
+            return Ok(new{mensagem = "Disciplina removida com sucesso"});   
         }
     }
 }

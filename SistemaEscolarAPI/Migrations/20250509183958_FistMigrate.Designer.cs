@@ -11,8 +11,8 @@ using SistemaEscolarAPI.DB;
 namespace SistemaEscolarAPI.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250430201829_Inicial")]
-    partial class Inicial
+    [Migration("20250509183958_FistMigrate")]
+    partial class FistMigrate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -163,23 +163,29 @@ namespace SistemaEscolarAPI.Migrations
 
             modelBuilder.Entity("SistemaEscolarAPI.Models.DisciplinaAlunoCurso", b =>
                 {
-                    b.HasOne("SistemaEscolarAPI.Models.Aluno", null)
+                    b.HasOne("SistemaEscolarAPI.Models.Aluno", "Aluno")
                         .WithMany("DisciplinaAlunoCursos")
                         .HasForeignKey("AlunoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("SistemaEscolarAPI.Models.Curso", null)
+                    b.HasOne("SistemaEscolarAPI.Models.Curso", "Curso")
                         .WithMany("DisciplinaAlunoCursos")
                         .HasForeignKey("CursoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("SistemaEscolarAPI.Models.Disciplina", null)
+                    b.HasOne("SistemaEscolarAPI.Models.Disciplina", "Disciplina")
                         .WithMany("DisciplinaAlunoCursos")
                         .HasForeignKey("DisciplinaId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Aluno");
+
+                    b.Navigation("Curso");
+
+                    b.Navigation("Disciplina");
                 });
 
             modelBuilder.Entity("SistemaEscolarAPI.Models.Aluno", b =>

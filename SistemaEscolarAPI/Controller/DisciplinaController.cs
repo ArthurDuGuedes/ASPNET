@@ -27,6 +27,7 @@ namespace SistemaEscolarAPI.Controller
                 .Include(d => d.Curso)
                 .Select(d => new DisciplinaDTO
                 {
+                    Id = d.Id,
                     Descricao = d.Descricao,
                     Curso = d.Curso.Descricao
                 })
@@ -38,16 +39,22 @@ namespace SistemaEscolarAPI.Controller
         [HttpGet("{id}")]
         public async Task<ActionResult<DisciplinaDTO>> GetId(int id)
         {
-            var disciplina = await _context.Disciplinas.Include(d => d.Curso).FirstOrDefaultAsync(d => d.Id == id);
+            var disciplina = await _context.Disciplinas
+                .Include(d => d.Curso)
+                .FirstOrDefaultAsync(d => d.Id == id);
 
             if (disciplina == null) return NotFound();
-            
-            return Ok(new DisciplinaDTO { Id = disciplina.Id, Descricao = disciplina.Descricao, Curso = disciplina.Curso.Descricao });
 
+            return Ok(new DisciplinaDTO
+            {
+                Id = disciplina.Id,
+                Descricao = disciplina.Descricao,
+                Curso = disciplina.Curso.Descricao
+            });
         }
 
         [HttpPost]
-        public async Task<ActionResult> Post([FromBody] DisciplinaDTO dto)
+        public async Task<ActionResult<DisciplinaDTO>> Post([FromBody] DisciplinaDTO dto)
         {
             var curso = await _context.Cursos.FirstOrDefaultAsync(c => c.Descricao == dto.Curso);
             if (curso == null) return BadRequest("Curso não encontrado");
@@ -60,13 +67,22 @@ namespace SistemaEscolarAPI.Controller
 
             _context.Disciplinas.Add(disciplina);
             await _context.SaveChangesAsync();
-            return Ok(new { mensagem = "Disciplina cadastrada com sucesso" });
+
+            return Ok(new DisciplinaDTO
+            {
+                Id = disciplina.Id,
+                Descricao = disciplina.Descricao,
+                Curso = curso.Descricao
+            });
         }
 
         [HttpPut("{id}")]
         public async Task<ActionResult> Put(int id, [FromBody] DisciplinaDTO dto)
         {
-            var disciplinaExistente = await _context.Disciplinas.Include(d => d.Curso).FirstOrDefaultAsync(d => d.Id == id);
+            var disciplinaExistente = await _context.Disciplinas
+                .Include(d => d.Curso)
+                .FirstOrDefaultAsync(d => d.Id == id);
+
             if (disciplinaExistente == null) return NotFound();
 
             var curso = await _context.Cursos.FirstOrDefaultAsync(c => c.Descricao == dto.Curso);
@@ -75,7 +91,6 @@ namespace SistemaEscolarAPI.Controller
             disciplinaExistente.Descricao = dto.Descricao;
             disciplinaExistente.Curso = curso;
 
-            _context.Disciplinas.Update(disciplinaExistente);
             await _context.SaveChangesAsync();
 
             return Ok(new { mensagem = "Disciplina atualizada com sucesso" });
@@ -90,7 +105,7 @@ namespace SistemaEscolarAPI.Controller
             _context.Disciplinas.Remove(disciplina);
             await _context.SaveChangesAsync();
 
-            return Ok(new{mensagem = "Disciplina removida com sucesso"});   
+            return Ok(new { mensagem = "Disciplina removida com sucesso" });
         }
     }
 }

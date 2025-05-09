@@ -6,7 +6,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace SistemaEscolarAPI.Migrations
 {
     /// <inheritdoc />
-    public partial class Inicial : Migration
+    public partial class FistMigrate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

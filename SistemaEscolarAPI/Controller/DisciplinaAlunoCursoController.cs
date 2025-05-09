@@ -30,7 +30,7 @@ namespace SistemaEscolarAPI.Controller
                 .Include(d => d.Curso)
                 .Select(dac => new DisciplinaAlunoCursoDTO
                 {
-                    Id = dac.AlunoId + dac.DisciplinaId + dac.CursoId, // ou algum identificador lógico
+                    Id = dac.Id,
                     AlunoId = dac.AlunoId,
                     AlunoNome = dac.Aluno.Nome,
                     DisciplinaId = dac.DisciplinaId,
@@ -54,7 +54,7 @@ namespace SistemaEscolarAPI.Controller
                 .Include(d => d.Curso)
                 .Select(dac => new DisciplinaAlunoCursoDTO
                 {
-                    Id = dac.AlunoId + dac.DisciplinaId + dac.CursoId, // ou algum identificador lógico
+                    Id = dac.Id,
                     AlunoId = dac.AlunoId,
                     AlunoNome = dac.Aluno.Nome,
                     DisciplinaId = dac.DisciplinaId,
@@ -62,7 +62,7 @@ namespace SistemaEscolarAPI.Controller
                     CursoId = dac.CursoId,
                     CursoDescricao = dac.Curso.Descricao
                 })
-                .ToListAsync();
+                .FirstOrDefaultAsync(dac => dac.Id == id);
 
             return Ok(dac);
         }
@@ -71,35 +71,74 @@ namespace SistemaEscolarAPI.Controller
         [HttpPost]
         public async Task<ActionResult> Post([FromBody] DisciplinaAlunoCursoDTO dac)
         {
-            var dacExistente = await _context.DisciplinaAlunoCursos.FirstOrDefaultAsync(dac => dac.DisciplinaId == dac.DisciplinaId && dac.AlunoId == dac.AlunoId && dac.CursoId == dac.CursoId);
-            if(dacExistente == null) return BadRequest("Disciplina Aluno Curso nao encontrado");
-            _context.DisciplinaAlunoCursos.Add(dacExistente);
+            var aluno = await _context.Alunos.FirstOrDefaultAsync(a => a.Nome == dac.AlunoNome);
+            if (aluno == null) return BadRequest("Aluno não encontrado");
+
+            var curso = await _context.Cursos.FirstOrDefaultAsync(c => c.Descricao == dac.CursoDescricao);
+            if (curso == null) return BadRequest("Curso não encontrado");
+
+            var disciplina = await _context.Disciplinas.FirstOrDefaultAsync(d => d.Descricao == dac.DisciplinaNome);
+            if (disciplina == null) return BadRequest("Disciplina não encontrada");
+
+            var novaRelacao = new DisciplinaAlunoCurso
+            {
+                AlunoId = aluno.Id,
+                CursoId = curso.Id,
+                DisciplinaId = disciplina.Id
+            };
+
+            _context.DisciplinaAlunoCursos.Add(novaRelacao);
             await _context.SaveChangesAsync();
-            return Ok(dacExistente);
+
+            return Ok(new { mensagem = "Cadastro realizado com sucesso" });
         }
+
 
         [HttpPut("{id}")]
         public async Task<ActionResult> Put([FromBody] DisciplinaAlunoCursoDTO dac, int id)
         {
-            var dacExistente = await _context.DisciplinaAlunoCursos.FirstOrDefaultAsync(dac => dac.DisciplinaId == dac.DisciplinaId && dac.AlunoId == dac.AlunoId && dac.CursoId == dac.CursoId);
-            if(dacExistente == null) return BadRequest("Disciplina Aluno Curso nao encontrado");
-            dacExistente.DisciplinaId = dac.DisciplinaId;
-            dacExistente.AlunoId = dac.AlunoId;
-            dacExistente.CursoId = dac.CursoId;
-            _context.DisciplinaAlunoCursos.Update(dacExistente);
+            var existente = await _context.DisciplinaAlunoCursos
+                .Include(d => d.Aluno)
+                .Include(d => d.Curso)
+                .Include(d => d.Disciplina)
+                .FirstOrDefaultAsync(x => x.Id == id);
+
+            if (existente == null)
+                return NotFound("Relação não encontrada.");
+
+            // Buscar entidades atualizadas com base nos nomes (como seu POST faz)
+            var aluno = await _context.Alunos.FirstOrDefaultAsync(a => a.Nome == dac.AlunoNome);
+            if (aluno == null) return BadRequest("Aluno não encontrado");
+
+            var curso = await _context.Cursos.FirstOrDefaultAsync(c => c.Descricao == dac.CursoDescricao);
+            if (curso == null) return BadRequest("Curso não encontrado");
+
+            var disciplina = await _context.Disciplinas.FirstOrDefaultAsync(d => d.Descricao == dac.DisciplinaNome);
+            if (disciplina == null) return BadRequest("Disciplina não encontrada");
+
+            // Atualiza os dados
+            existente.AlunoId = aluno.Id;
+            existente.CursoId = curso.Id;
+            existente.DisciplinaId = disciplina.Id;
+
+            _context.DisciplinaAlunoCursos.Update(existente);
             await _context.SaveChangesAsync();
-            return Ok(dacExistente);
+
+            return Ok("Atualização realizada com sucesso.");
         }
 
-        [HttpDelete]
+
+        [HttpDelete("{id}")]
         public async Task<ActionResult> Delete(int id)
         {
-            var dacExistente = await _context.DisciplinaAlunoCursos.FirstOrDefaultAsync(dac => dac.DisciplinaId == dac.DisciplinaId && dac.AlunoId == dac.AlunoId && dac.CursoId == dac.CursoId);
-            if(dacExistente == null) return BadRequest("Disciplina Aluno Curso nao encontrado");
+            var dacExistente = await _context.DisciplinaAlunoCursos.FirstOrDefaultAsync(dac => dac.Id == id);
+            if(dacExistente == null) return NotFound("Disciplina Aluno Curso não encontrada");
+
             _context.DisciplinaAlunoCursos.Remove(dacExistente);
             await _context.SaveChangesAsync();
-            return Ok(dacExistente);
+            return Ok("Removido com sucesso");
         }
+
 
     }
     

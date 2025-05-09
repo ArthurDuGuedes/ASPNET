@@ -5,7 +5,7 @@
 namespace SistemaEscolarAPI.Migrations
 {
     /// <inheritdoc />
-    public partial class WiiDante : Migration
+    public partial class correcao1 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

@@ -11,8 +11,8 @@ using SistemaEscolarAPI.DB;
 namespace SistemaEscolarAPI.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250502192223_WiiDante")]
-    partial class WiiDante
+    [Migration("20250509185355_correcao1")]
+    partial class correcao1
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -93,19 +93,24 @@ namespace SistemaEscolarAPI.Migrations
 
             modelBuilder.Entity("SistemaEscolarAPI.Models.DisciplinaAlunoCurso", b =>
                 {
-                    b.Property<int>("AlunoId")
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
 
-                    b.Property<int>("DisciplinaId")
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("AlunoId")
                         .HasColumnType("integer");
 
                     b.Property<int>("CursoId")
                         .HasColumnType("integer");
 
-                    b.Property<int>("Id")
+                    b.Property<int>("DisciplinaId")
                         .HasColumnType("integer");
 
-                    b.HasKey("AlunoId", "DisciplinaId", "CursoId");
+                    b.HasKey("Id");
+
+                    b.HasIndex("AlunoId");
 
                     b.HasIndex("CursoId");
 
